@@ -11,6 +11,5 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="User Service")
 
-app.include_router(user.router)
-app.include_router(auth.router)
-
+app.include_router(user.router, prefix="/api/users")
+app.include_router(auth.router, prefix="/api/users")

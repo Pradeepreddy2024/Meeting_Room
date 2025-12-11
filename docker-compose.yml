@@ -16,8 +16,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  frontend:
+    build: ./Frontend
+    container_name: frontend_service
+    ports:
+      - "3000:80"         # Browser → localhost:3000
+    depends_on:
+      - user_service
+      - room_service
+      - booking_service
+    restart: always
+
+
   user_service:
-    build: ./user_service
+    build: ./Backend/user_service
     container_name: user_service
     restart: always
     env_file:
@@ -28,7 +40,7 @@ services:
       - "8001:8000"
 
   room_service:
-    build: ./room_service
+    build: ./Backend/room_service
     container_name: room_service
     restart: always
     env_file:
@@ -39,7 +51,7 @@ services:
       - "8002:8000"
 
   booking_service:
-    build: ./booking_service
+    build: ./Backend/booking_service
     container_name: booking_service
     restart: always
     env_file:
